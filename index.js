@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import { genreRouter } from './routes/genre.route.js';
 // import apicache from 'apicache';
@@ -16,7 +17,7 @@ dotenv.config();
 mongoose.connect(process.env.MONGO_URL).then(() => console.log("Connect Mongoose success"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
-
+app.use(cors());
 app.get('/', (req, res) => {
   res.json({'movie-be': "Hello world!"});
 })
@@ -32,7 +33,7 @@ app.use('/genre',genreRouter)
 // });
 
 app.listen(process.env.PORT || 8888, () => {
-  console.log("Server is running on port 8888");
+  console.log(process.env.PORT? process.env.PORT : 'BE is running on port 8888');
 });
 
 
